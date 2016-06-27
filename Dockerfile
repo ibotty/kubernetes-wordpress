@@ -18,8 +18,8 @@ RUN yum install --setopt=tsflags=nodocs -y centos-release-scl-rh \
 COPY libexec/* /usr/libexec/wordpress-container/
 COPY share/* /opt/app-root/etc/
 
-ENV WORDPRESS_VERSION 4.5
-ENV WORDPRESS_SHA1 439f09e7a948f02f00e952211a22b8bb0502e2e2
+ENV WORDPRESS_VERSION 4.5.3
+ENV WORDPRESS_SHA1 835b68748dae5a9d31c059313cd0150f03a49269
 ENV WORDPRESS_URL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz
 
 # separate RUN commands to allow caching the base install
