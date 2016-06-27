@@ -13,7 +13,10 @@ RUN yum install --setopt=tsflags=nodocs -y centos-release-scl-rh \
                 ${PHP_SCL_PREFIX}-php-opcache \
  && yum clean all \
  && echo "source scl_source enable $PHP_SCL_PREFIX" \
-    >> /opt/app-root/etc/scl_enable
+    >> /opt/app-root/etc/scl_enable \
+ && touch /opt/app-root/etc/passwd \
+ && chgrp root /opt/app-root/etc/passwd \
+ && chmod a+rw /opt/app-root/etc/passwd
 
 COPY libexec/* /usr/libexec/wordpress-container/
 COPY share/* /opt/app-root/etc/
