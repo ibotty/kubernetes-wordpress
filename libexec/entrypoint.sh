@@ -32,6 +32,7 @@ copy_or_update_wordpress() {
 mk_wpconfig() {
     to_replace="WORDPRESS_table_prefix"
     for key in $STRING_KEYS $TO_GENERATE_KEYS WP_DEBUG; do
+        export $key
         to_replace="$to_replace:\$WORDPRESS_$key"
     done
     . /opt/app-root/etc/wp-config.defaults
