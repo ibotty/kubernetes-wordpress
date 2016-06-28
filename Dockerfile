@@ -1,6 +1,7 @@
 FROM openshift/base-centos7
 MAINTAINER Tobias Florek <tob@butter.sh>
 
+EXPOSE 9000
 ENV PHP_VERSION 56
 ENV PHP_SCL_PREFIX rh-php${PHP_VERSION}
 
