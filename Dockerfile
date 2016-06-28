@@ -34,4 +34,4 @@ RUN curl -Lo /usr/src/wordpress.tar.gz $WORDPRESS_URL \
 
 USER 1001
 ENTRYPOINT /usr/libexec/wordpress-container/entrypoint.sh
-CMD ["php-fpm", "-F"]
+CMD ["php-fpm", "-FO"]
