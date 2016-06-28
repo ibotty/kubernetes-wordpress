@@ -77,11 +77,17 @@ update_wpconfig() {
     rm "$appendfile"
 }
 
+mk_nginx_conf() {
+    cp /opt/app-root/etc/nginx.conf /opt/app-root/src/nginx.conf
+}
+
 copy_or_update_wordpress
 
 if ! [ -f /opt/app-root/src/wordpress/wp-config.php ]; then
     mk_wpconfig
 fi
 update_wpconfig
+
+mk_nginx_conf
 
 exec "$@"
