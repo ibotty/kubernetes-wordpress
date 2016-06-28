@@ -43,7 +43,7 @@ update_wpconfig() {
     for key in $STRING_KEYS $TO_GENERATE_KEYS; do
         eval "val=\$WORDPRESS_$key"
         if [ -n "$val" ]; then
-            echo "/define('$key',/cdefine('$key','$val')"
+            echo "/define('$key',/cdefine('$key','$val');"
         fi
     done >> $sedscript
 
