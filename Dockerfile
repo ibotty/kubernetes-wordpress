@@ -16,7 +16,8 @@ RUN yum install --setopt=tsflags=nodocs -y centos-release-scl-rh \
     >> /opt/app-root/etc/scl_enable \
  && touch /opt/app-root/etc/passwd \
  && chgrp root /opt/app-root/etc/passwd \
- && chmod a+rw /opt/app-root/etc/passwd
+ && chmod g+rw /opt/app-root/etc/passwd \
+ && chmod g+rwx /var/opt/rh/$PHP_SCL_PREFIX/run/php-fpm
 
 COPY libexec/* /usr/libexec/wordpress-container/
 COPY share/* /opt/app-root/etc/
