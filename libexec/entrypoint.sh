@@ -30,12 +30,13 @@ copy_or_update_wordpress() {
 }
 
 mk_wpconfig() {
+    . /opt/app-root/etc/wp-config.defaults
+
     to_replace="WORDPRESS_table_prefix"
     for key in $STRING_KEYS $TO_GENERATE_KEYS WP_DEBUG; do
         export $key
         to_replace="$to_replace:\$WORDPRESS_$key"
     done
-    . /opt/app-root/etc/wp-config.defaults
     envsubst "$to_replace" \
         < /opt/app-root/etc/wp-config.php.tmpl \
         > /opt/app-root/src/wordpress/wp-config.php
@@ -82,13 +83,13 @@ mk_nginx_conf() {
     cp /opt/app-root/etc/nginx.conf /opt/app-root/src/nginx.conf
 }
 
+mk_nginx_conf
+
 copy_or_update_wordpress
 
 if ! [ -f /opt/app-root/src/wordpress/wp-config.php ]; then
     mk_wpconfig
 fi
 update_wpconfig
-
-mk_nginx_conf
 
 exec "$@"
