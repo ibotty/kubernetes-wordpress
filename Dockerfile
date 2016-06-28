@@ -11,6 +11,7 @@ RUN yum install --setopt=tsflags=nodocs -y centos-release-scl-rh \
                 ${PHP_SCL_PREFIX}-php-gd \
                 ${PHP_SCL_PREFIX}-php-mysqlnd \
                 ${PHP_SCL_PREFIX}-php-opcache \
+                nss_wrapper \
  && yum clean all \
  && echo "source scl_source enable $PHP_SCL_PREFIX" \
     >> /opt/app-root/etc/scl_enable \
