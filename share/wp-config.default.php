@@ -20,22 +20,22 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', '${WORDPRESS_DB_NAME}');
+define('DB_NAME', 'wordpress');
 
 /** MySQL database username */
-define('DB_USER', '${WORDPRESS_DB_USER}');
+define('DB_USER', 'wordpress');
 
 /** MySQL database password */
-define('DB_PASSWORD', '${WORDPRESS_DB_PASSWORD}');
+define('DB_PASSWORD', '');
 
 /** MySQL hostname */
-define('DB_HOST', '${WORDPRESS_DB_HOST}');
+define('DB_HOST', 'wordpress-db');
 
 /** Database Charset to use in creating database tables. */
-define('DB_CHARSET', '${WORDPRESS_DB_CHARSET}');
+define('DB_CHARSET', 'utf-8');
 
 /** The Database Collate type. Don't change this if in doubt. */
-define('DB_COLLATE', '${WORDPRESS_DB_COLLATE}');
+define('DB_COLLATE', '');
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -46,14 +46,14 @@ define('DB_COLLATE', '${WORDPRESS_DB_COLLATE}');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         '${WORDPRESS_AUTH_KEY}');
-define('SECURE_AUTH_KEY',  '${WORDPRESS_SECURE_AUTH_KEY}');
-define('LOGGED_IN_KEY',    '${WORDPRESS_LOGGED_IN_KEY}');
-define('NONCE_KEY',        '${WORDPRESS_NONCE_KEY}');
-define('AUTH_SALT',        '${WORDPRESS_AUTH_SALT}');
-define('SECURE_AUTH_SALT', '${WORDPRESS_SECURE_AUTH_SALT}');
-define('LOGGED_IN_SALT',   '${WORDPRESS_LOGGED_IN_SALT}');
-define('NONCE_SALT',       '${WORDPRESS_NONCE_SALT}');
+define('AUTH_KEY',         'put your unique phrase here');
+define('SECURE_AUTH_KEY',  'put your unique phrase here');
+define('LOGGED_IN_KEY',    'put your unique phrase here');
+define('NONCE_KEY',        'put your unique phrase here');
+define('AUTH_SALT',        'put your unique phrase here');
+define('SECURE_AUTH_SALT', 'put your unique phrase here');
+define('LOGGED_IN_SALT',   'put your unique phrase here');
+define('NONCE_SALT',       'put your unique phrase here');
 
 /**#@-*/
 
@@ -63,7 +63,7 @@ define('NONCE_SALT',       '${WORDPRESS_NONCE_SALT}');
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix  = '${WORDPRESS_TABLE_PREFIX}';
+$table_prefix  = 'wp_';
 
 /**
  * For developers: WordPress debugging mode.
@@ -80,7 +80,7 @@ $table_prefix  = '${WORDPRESS_TABLE_PREFIX}';
 define('WP_DEBUG', false);
 
 /**
- * Trust proxies before us.
+ * Trust proxies.
  */
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
     $_SERVER['HTTPS'] = 'on';

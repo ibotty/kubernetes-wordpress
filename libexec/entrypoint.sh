@@ -30,37 +30,29 @@ copy_or_update_wordpress() {
 }
 
 mk_wpconfig() {
-    . /opt/app-root/etc/wp-config.defaults
-
-    to_replace="WORDPRESS_table_prefix"
-    for key in $STRING_KEYS $TO_GENERATE_KEYS WP_DEBUG; do
-        export $key
-        to_replace="$to_replace:\$WORDPRESS_$key"
+    for key in $TO_GENERATE_KEYS; do
+        export WORDPRESS_$key=$(rand_val)
     done
-    envsubst "$to_replace" \
-        < /opt/app-root/etc/wp-config.php.tmpl \
-        > /opt/app-root/src/wordpress/wp-config.php
+    cp /opt/app-root/etc/wp-config.default.php \
+        /opt/app-root/src/wordpress/wp-config.php
 }
 
 update_wpconfig() {
-    appendfile="$(mktemp)"
-    reset_keys=""
+    local sedscript="$(mktemp)"
 
     for key in $STRING_KEYS $TO_GENERATE_KEYS; do
         eval "val=\$WORDPRESS_$key"
         if [ -n "$val" ]; then
-            reset_keys="$reset_keys -e /define('$key')/d"
-            echo "define('$key', '$val');"
+            echo "/define('$key',/cdefine('$key','$val')"
         fi
-    done > "$appendfile"
+    done >> $sedscript
+
     case "$WORDPRESS_WP_DEBUG" in
         y|yes|true|1)
-            reset_keys="$reset_keys -e /define('WP_DEBUG')/d"
-            echo "define('WP_DEBUG', true);" >> $appendfile
+            echo "/define('WP_DEBUG',/cdefine('WP_DEBUG',true);" >> $sedscript
             ;;
         n|no|false|0)
-            reset_keys="$reset_keys -e /define('WP_DEBUG')/d"
-            echo "define('WP_DEBUG', true);" >> $appendfile
+            echo "/define('WP_DEBUG',/cdefine('WP_DEBUG',false);" >> $sedscript
             ;;
         "")
             ;;
@@ -68,15 +60,16 @@ update_wpconfig() {
             err "cannot parse \$WP_DEBUG: \"$WP_DEBUG\". Ignoring"
             ;;
     esac
-    if [ -n "$WORDPRESS_table_prefix" ]; then
-        reset_keys="$reset_keys -e '/\$table_prefix /d'"
-        echo "\$table_prefix = '$WORDPRESS_TABLE_PREFIX';"
+
+    if [ -n "$WORDPRESS_TABLE_PREFIX" ]; then
+        echo "/\$table_prefix = /c\$table_prefix = $WORDPRESS_TABLE_PREFIX;" >> $sedscript
     fi
 
-    if [ -n "$reset_keys" ]; then
-        sed -i $reset_keys /opt/app-root/src/wordpress/wp-config.php
+    if [ -s "$sedscript" ]; then
+        sed -i -f $sedscript /opt/app-root/src/wordpress/wp-config.php
     fi
-    rm "$appendfile"
+
+    rm $sedscript
 }
 
 mk_nginx_conf() {
