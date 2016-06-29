@@ -19,7 +19,9 @@ RUN yum install --setopt=tsflags=nodocs -y centos-release-scl-rh \
  && touch /opt/app-root/etc/passwd \
  && chgrp root /opt/app-root/etc/passwd \
  && chmod g+rw /opt/app-root/etc/passwd \
- && chmod g+rwx /var/opt/rh/$PHP_SCL_PREFIX/run/php-fpm
+ && chmod g+rwx /var/opt/rh/$PHP_SCL_PREFIX/run/php-fpm \
+ && sed -i '/^upload_max_filesize /cupload_max_filesize = 256m' \
+         /opt/rh/$PHP_SCL_PREFIX/register.content/etc/opt/rh/$PHP_SCL_PREFIX/php.ini
 
 COPY libexec/* /usr/libexec/wordpress-container/
 COPY share/* /opt/app-root/etc/
