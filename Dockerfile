@@ -19,7 +19,7 @@ RUN yum install --setopt=tsflags=nodocs -y centos-release-scl-rh \
  && touch /opt/app-root/etc/passwd \
  && chgrp root /opt/app-root/etc/passwd \
  && chmod g+rw /opt/app-root/etc/passwd \
- && chmod g+rwx /var/opt/rh/$PHP_SCL_PREFIX/run/php-fpm \
+ && chmod g+rwx /var/opt/rh/$PHP_SCL_PREFIX/run/php-fpm /etc/opt/rh \
  && sed -i '/^upload_max_filesize /cupload_max_filesize = 256m' \
          /etc/opt/rh/rh-php56/php.ini
 
